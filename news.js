@@ -62,7 +62,7 @@ const handleLoadNews = async (categoryId) => {
                         </div>
                     </div>
                     <div class="card-detaild-btn">
-                        <button onclick="handleModal()"
+                        <button onclick="handleModal('${news._id}')"
                             class="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">
                             Details
                         </button>
@@ -77,18 +77,22 @@ const handleLoadNews = async (categoryId) => {
 
 };
 
-const handleModal = (data) => {
+const handleModal = async (newsID) => {
+    // console.log(newsID);
+
+    const res = await fetch(`https://openapi.programming-hero.com/api/news/${newsID}`);
+    const data = await res.json();
+    // console.log(data.data[0]);
+
     const modalContainer = document.getElementById('modal-container');
     const div = document.createElement('div');
     div.innerHTML = `
-        <dialog id="news_modal" class="modal">
+        <dialog id="news_modal" class="modal ">
             <form method="dialog" class="modal-box">
-                <h3 class="font-bold text-lg">Hello!</h3>
-                <p class="py-4">Press ESC key or click the button below to close</p>
-                <div class="modal-action">
-                    <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn">Close</button>
-                </div>
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <img class="p-8 mx-auto text-center justify-center" src="${data.data[0].thumbnail_url}" alt="">
+                <h3 class="font-bold text-lg">${data.data[0]?.title}</h3>
+                <p class="py-4">${data.data[0]?.details}</p>
             </form>
         </dialog>
     `;
