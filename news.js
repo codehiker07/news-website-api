@@ -62,7 +62,7 @@ const handleLoadNews = async (categoryId) => {
                         </div>
                     </div>
                     <div class="card-detaild-btn">
-                        <button
+                        <button onclick="handleModal()"
                             class="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">
                             Details
                         </button>
@@ -76,6 +76,28 @@ const handleLoadNews = async (categoryId) => {
     })
 
 };
+
+const handleModal = (data) => {
+    const modalContainer = document.getElementById('modal-container');
+    const div = document.createElement('div');
+    div.innerHTML = `
+        <dialog id="news_modal" class="modal">
+            <form method="dialog" class="modal-box">
+                <h3 class="font-bold text-lg">Hello!</h3>
+                <p class="py-4">Press ESC key or click the button below to close</p>
+                <div class="modal-action">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Close</button>
+                </div>
+            </form>
+        </dialog>
+    `;
+    modalContainer.appendChild(div);
+
+    const modal = document.getElementById('news_modal');
+    modal.showModal();
+}
+
 
 handleCategory();
 handleLoadNews('01');
